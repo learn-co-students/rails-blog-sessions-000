@@ -15,7 +15,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to user_path(@user), :notice => "Thank you for signing up!"
+      set_sign_in
+      session[:user_id] = @user.id
+      redirect_to root_path(@user), :notice => "Thank you for signing up!"
     else
       render :new
     end
@@ -27,6 +29,7 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:name)
+      params.require(:user).permit(:name, :password, :email)
+      #there is another :password_confirmation attribute that is checked here, but that seems to not work for me.  CHECK!!
     end
 end

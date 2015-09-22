@@ -16,8 +16,10 @@
     <%= f.text_field :name %><br>
     <%= f.label :content %><br>
     <%= f.text_area :content %><br>
-    Tags:
+    <%= f.hidden_field :user_id, :value => session["user_id"] %>
   </div>
+
+  <!-- Not quite sure why this hidden tag needs to be there but calling upon the sessions controller I think, CHECK!! -->
 
   <div class="field">
     <%= f.collection_check_boxes :tag_ids, Tag.all, :id, :name %><br>

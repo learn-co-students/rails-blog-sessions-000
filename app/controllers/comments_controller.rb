@@ -1,4 +1,6 @@
 class CommentsController < ApplicationController
+  before_action :authorize, only: [:new, :create, :edit, :update, :destroy]
+  #this seems to be the method in application_controller is making a new (instance of the class??)
   before_action :set_post, only: [:edit, :update, :destroy]
 
   def new

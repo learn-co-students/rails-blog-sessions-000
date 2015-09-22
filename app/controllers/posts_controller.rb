@@ -1,4 +1,8 @@
 class PostsController < ApplicationController
+
+  before_action :authorize, only: [:new, :create, :edit, :update, :destroy]
+
+  #seems to also be added here as well as in the comments controller
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index
