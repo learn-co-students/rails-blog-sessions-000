@@ -1,7 +1,11 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :authorize, only: [:new, :edit, :create, :update, :destroy]
 
   def index
+    if !session[:user_id]
+      @notice = "Log in to edit or delete your Post"
+    end
     @posts = Post.all
   end
 

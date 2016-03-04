@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_post, only: [:edit, :update, :destroy]
-
+  before_action :authorize, only: [:new, :edit, :create, :update, :destroy]
+  
   def new
     @comment = Comment.new
   end
