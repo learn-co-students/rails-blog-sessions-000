@@ -8,7 +8,16 @@
 </head>
 <body>
 
-<%= yield %>
+<%= render 'header' %>
+
+<div id="content" >
+  <div class="wrapper">
+    <% flash.each do |name, msg| %>
+      <%= msg %>
+    <% end %>
+    <%= yield %>
+  </div>
+</div>
 
 </body>
 </html>
