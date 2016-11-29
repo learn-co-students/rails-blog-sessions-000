@@ -4,6 +4,9 @@
 <%= @post.name %>
 <h3>Content:</h3>
 <%= @post.content %>
+<h3>Posted by:</h3>
+<%= @post.user.name %>
+<!-- Added this ^ top little diddy -->
 <h3>Tags:</h3>
 <ul>
   <% @post.tags.each do |tag| %>
@@ -15,18 +18,30 @@
     <p><%= comment.content %> </p>
   <% end %>
 
+<% if !user_signed_in? %>
+  <%= link_to "Log In to Comment!", login_path %>
+<% else %>
+<!-- Because I think the posts appear on the first page there's also a place to, since you can't comment, to log in if you aren't already (perhaps superfulous since it's in the header...) -->
+
   <h4>Post a new comment:</h4>
   <%= form_for [@post, Comment.new] do |f| %>
     <div class="field">
       <%= f.label :content %><br>
       <%= f.text_area :content %><br>
       <%= f.hidden_field :post_id, :value => @post.id %>
+      <%= f.hidden_field :user_id, :value => session["user_id"] %>
+      <!-- Added another one of these, really need to CHECK!! what is does and why it is needed. -->
     </div>
 
     <div class="actions">
       <%= f.submit %>
     </div>
   <% end %>
+<% end %>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
+<% if user_signed_in? %>
+  <%= link_to 'Edit', edit_post_path(@post) %> |
+<% end %>
+
+<!-- Switched the edit button from a commonly found button to one that you will only see if you are logged in -->
 <%= link_to 'Back', posts_path %>
